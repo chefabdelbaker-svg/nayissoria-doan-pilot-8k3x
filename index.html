@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow"><title>NAYISSORIA · Pilotage DOAN</title>
+<style>
+:root{--ink:#171c1a;--stone:#efeae2;--card:#fbf9f5;--line:#ddd5c8;--gold:#b9915d;--gold2:#d3b184;--mut:#6f675b;--red:#b3261e;--grn:#1f7a3d;--blu:#1d5bb8;--amb:#b7791f}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;background:var(--stone);color:var(--ink);font-size:14px}
+header{background:var(--ink);color:#fff;padding:10px 20px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;position:sticky;top:0;z-index:20}
+.brand{font-family:Georgia,serif;font-size:19px;letter-spacing:1px;display:flex;align-items:center;gap:8px;margin-right:10px}
+.brand i{width:10px;height:10px;background:var(--gold2);transform:rotate(45deg);display:inline-block}
+.brand small{font-family:-apple-system,Arial,sans-serif;font-size:12px;color:#b8afa1;letter-spacing:0}
+.tab{background:none;border:0;color:#cfc6b8;font:inherit;padding:8px 12px;border-radius:8px;cursor:pointer;white-space:nowrap}
+.tab.on{background:#fff;color:var(--ink);font-weight:600}
+.sp{flex:1}
+.lang{display:flex;border:1px solid #5c554a;border-radius:8px;overflow:hidden}.lang button{background:none;border:0;color:#cfc6b8;padding:5px 10px;cursor:pointer;font:inherit}.lang button.on{background:var(--gold);color:#fff}
+.hbtn{background:none;border:1px solid #5c554a;color:#cfc6b8;border-radius:8px;padding:5px 10px;cursor:pointer;font:inherit}
+main{max-width:1280px;margin:0 auto;padding:18px}
+h1{font-family:Georgia,serif;font-size:24px;margin:0 0 4px}h2{font-family:Georgia,serif;font-size:18px;margin:0 0 10px}
+.sub{color:var(--mut);margin:0 0 16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;margin-bottom:16px}
+.grid{display:grid;gap:14px}.g4{grid-template-columns:repeat(auto-fit,minmax(190px,1fr))}.g2{grid-template-columns:repeat(auto-fit,minmax(340px,1fr))}
+.kpi .n{font-family:Georgia,serif;font-size:30px;line-height:1.1}.kpi .l{color:var(--mut);font-size:12px;text-transform:uppercase;letter-spacing:.6px;margin-top:4px}
+.bar{height:8px;background:#e6dfd3;border-radius:6px;overflow:hidden}.bar>i{display:block;height:100%;background:var(--gold)}
+table{width:100%;border-collapse:collapse}th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.6px;color:var(--mut);padding:6px 8px;border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:6px 8px;border-bottom:1px solid #ece5d9;vertical-align:middle}tr:last-child td{border-bottom:0}
+input,select,textarea{font:inherit;color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:7px;padding:5px 7px;max-width:100%}
+input[type=checkbox]{width:18px;height:18px;accent-color:var(--gold)}
+td input.w{width:100%}td input[type=date]{width:136px}td input[type=number]{width:110px}
+.late{background:#fbeceb}.chip{display:inline-block;border-radius:999px;padding:2px 9px;font-size:12px;font-weight:600}
+.c-todo{background:#e9e3d7;color:#5b5346}.c-doing{background:#dce8fa;color:var(--blu)}.c-sent{background:#fdefcf;color:var(--amb)}.c-done,.c-paid{background:#dcf1e2;color:var(--grn)}.c-red{background:#f8d9d6;color:var(--red)}
+button.b{background:var(--ink);color:#fff;border:0;border-radius:8px;padding:7px 12px;cursor:pointer;font:inherit}button.b.g{background:var(--gold)}button.b.o{background:none;color:var(--ink);border:1px solid var(--line)}
+button.x{background:none;border:0;color:#a09686;cursor:pointer;font-size:16px}button.x:hover{color:var(--red)}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.gantt{position:relative;overflow-x:auto}.gt{min-width:900px}
+.gh,.gr{display:grid;grid-template-columns:230px 1fr;align-items:center}
+.gh .wk{display:grid;grid-template-columns:repeat(11,1fr);font-size:11px;color:var(--mut);text-align:center}.gh .wk span{border-left:1px solid var(--line);padding:2px 0}
+.gr{border-top:1px solid #ece5d9;height:36px}.gr .lab{font-size:13px;padding-right:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.track{position:relative;height:100%}.track .wkl{position:absolute;top:0;bottom:0;border-left:1px solid #ece5d9}
+.gb{position:absolute;top:10px;height:16px;border-radius:5px;background:var(--gold2);opacity:.9}.gb.d{background:#8bc79b}
+.dot{position:absolute;top:12px;width:12px;height:12px;border-radius:50%;background:var(--ink);transform:translateX(-6px);border:2px solid #fff}.dot.d{background:var(--grn)}.dot.l{background:var(--red)}
+.dia{position:absolute;top:11px;width:13px;height:13px;background:var(--red);transform:translateX(-6px) rotate(45deg)}
+.today{position:absolute;top:0;bottom:0;width:2px;background:var(--red);opacity:.7}
+#login{max-width:380px;margin:12vh auto;text-align:center}#login input{width:100%;margin:12px 0;padding:10px;font-size:16px;text-align:center}
+#msg{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:8px 16px;border-radius:10px;z-index:50;display:none}
+.mut{color:var(--mut)}.tr{text-align:right}.sm{font-size:12px}
+@media print{header,#msg,button{display:none!important}}
+</style></head><body>
+<div id="app"></div><div id="msg"></div>
+<script>
+const SB='https://dseeuxxfnqqyfxibhtzm.supabase.co';
+const KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRzZWV1eHhmbnFxeWZ4aWJodHptIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTM2NzkzMDAsImV4cCI6MjEwOTI1NTMwMH0.-DHg3KiEh18BGvb7dCxcxDgN-hPaI2eMhUfyBqVRRik';
+const START=new Date('2026-11-15T00:00:00'),END=new Date('2027-01-28T00:00:00'),DAYS=Math.round((END-START)/864e5)+1;
+const T={fr:{
+ sub:'Pilotage du projet DOAN · Khaliat Al Nahl (Rabwa, Riyadh)',dash:'Tableau de bord',deliv:'Livrables & Gantt',pay:'Paiements',p1:'Phase 1 & journal',bud:'Budget client',ctc:'Contacts',
+ code:'Code d\'accès',enter:'Entrer',bad:'Code incorrect',logout:'Quitter',backup:'Sauvegarde',saving:'Enregistrement…',saved:'Enregistré',err:'Erreur de connexion',
+ open:'Ouverture',days:'jours avant l\'ouverture',prog:'Livrables terminés',lateN:'Livrables en retard',recv:'Encaissé (SAR)',next:'Prochaines échéances',late:'En retard',none:'Rien',
+ byPhase:'Avancement par phase',payS:'Paiements',phase:'Phase',ref:'Réf',title:'Livrable',due:'Échéance',status:'Statut',note:'Note',add:'+ Ajouter',
+ todo:'À faire',doing:'En cours',sent:'Envoyé au client',done:'Terminé',ptodo:'À envoyer',psent:'Demande envoyée',ppaid:'Encaissé',
+ amount:'Montant (SAR)',trigger:'Déclencheur',planned:'Date prévue',sentOn:'Envoyée le',paidOn:'Encaissée le',total:'Total du contrat',remain:'Reste à encaisser',link:'Lien',
+ q:'Questionnaire client',v:'Visite du local',r:'Rapport de faisabilité',journal:'Journal des décisions',date:'Date',decision:'Décision / échange',who:'Qui',client:'Client',me:'Moi',
+ label:'Libellé',family:'Famille',supplier:'Fournisseur',quote:'Devis (SAR)',paid:'Payé (SAR)',bstat:'Statut',b0:'À demander',b1:'Devis reçu',b2:'Validé',b3:'Payé',target:'Budget cible du client (SAR)',
+ name:'Nom',role:'Rôle',company:'Société',phone:'Téléphone',email:'E-mail',today:'Aujourd\'hui',gantt:'Calendrier (semaine 1 = 15 nov. 2026)',payM:'Paiement',opening:'Ouverture',
+ fams:['Travaux','Équipements','Design & identité','Mobilier','Licences & admin','Autre'],roles:['Architecte','Designer','Entreprise travaux','Fournisseur','Juridique','Client','Autre'],
+ itemTxt:'Point',del:'Supprimer ?',totQ:'Total devis',totP:'Total payé',offBud:'Reste sur budget',wk:'S'},
+en:{
+ sub:'DOAN · Khaliat Al Nahl project control (Rabwa, Riyadh)',dash:'Dashboard',deliv:'Deliverables & Gantt',pay:'Payments',p1:'Phase 1 & log',bud:'Client budget',ctc:'Contacts',
+ code:'Access code',enter:'Enter',bad:'Wrong code',logout:'Log out',backup:'Backup',saving:'Saving…',saved:'Saved',err:'Connection error',
+ open:'Opening',days:'days to opening',prog:'Deliverables done',lateN:'Late deliverables',recv:'Received (SAR)',next:'Next deadlines',late:'Late',none:'Nothing',
+ byPhase:'Progress by phase',payS:'Payments',phase:'Phase',ref:'Ref',title:'Deliverable',due:'Due',status:'Status',note:'Note',add:'+ Add',
+ todo:'To do',doing:'In progress',sent:'Sent to client',done:'Done',ptodo:'To send',psent:'Request sent',ppaid:'Received',
+ amount:'Amount (SAR)',trigger:'Trigger',planned:'Planned date',sentOn:'Sent on',paidOn:'Received on',total:'Contract total',remain:'Left to collect',link:'Link',
+ q:'Client questionnaire',v:'Site visit',r:'Feasibility report',journal:'Decision log',date:'Date',decision:'Decision / exchange',who:'Who',client:'Client',me:'Me',
+ label:'Label',family:'Family',supplier:'Supplier',quote:'Quote (SAR)',paid:'Paid (SAR)',bstat:'Status',b0:'To request',b1:'Quote received',b2:'Approved',b3:'Paid',target:'Client target budget (SAR)',
+ name:'Name',role:'Role',company:'Company',phone:'Phone',email:'Email',today:'Today',gantt:'Calendar (week 1 = 15 Nov 2026)',payM:'Payment',opening:'Opening',
+ fams:['Works','Equipment','Design & identity','Furniture','Licences & admin','Other'],roles:['Architect','Designer','Contractor','Supplier','Legal','Client','Other'],
+ itemTxt:'Item',del:'Delete?',totQ:'Total quotes',totP:'Total paid',offBud:'Left on budget',wk:'W'}};
+const PH=[['ph1','1','Cadrage & faisabilité du local','Scoping & site feasibility','2026-11-15','2026-11-26'],
+['ph2','2','Design & identité visuelle','Design & visual identity','2026-11-22','2026-12-10'],
+['ph3','3','Menu, implantation & équipements','Menu, layout & equipment','2026-11-22','2026-12-17'],
+['ph4','4','Conception des travaux & coordination','Works design & coordination','2026-12-13','2027-01-21'],
+['ph5','5','Budget, investissement & rentabilité','Budget, investment & profitability','2026-11-29','2026-12-17'],
+['ph6','6','Fournisseurs, production & SOP','Suppliers, production & SOPs','2026-12-13','2027-01-14'],
+['ph7','7','Formation & préparation à l\'ouverture','Team training & opening preparation','2026-12-27','2027-01-28']];
+const DL=[
+['1.1','ph1','Brief client + questionnaire complété','Client brief + completed questionnaire','2026-11-18'],
+['1.2','ph1','Visite du local, mesures, checklist technique','Site visit, measurements, technical checklist','2026-11-23'],
+['1.3','ph1','Rapport de faisabilité','Feasibility report','2026-11-26'],
+['2.1','ph2','3 pistes de logo','3 logo routes','2026-11-26'],
+['2.2','ph2','Piste retenue : logo, palette, typographie','Chosen route: logo, palette, typography','2026-12-03'],
+['2.3','ph2','Mini-guide d\'usage final','Final short usage guide','2026-12-10'],
+['3.1','ph3','Menu v1','Menu v1','2026-12-03'],
+['3.2','ph3','Plan d\'implantation, 2 scénarios','Layout plan, 2 scenarios','2026-12-03'],
+['3.3','ph3','Liste d\'équipements chiffrée','Priced equipment list','2026-12-10'],
+['3.4','ph3','Implantation + équipements finaux validés','Final layout + equipment validated','2026-12-17'],
+['5.1','ph5','Budget d\'investissement v1','Investment budget v1','2026-12-10'],
+['5.2','ph5','Plan d\'investissement et de rentabilité validé','Investment & profitability plan validated','2026-12-17'],
+['4.1','ph4','Cahier des charges travaux','Works specification','2026-12-24'],
+['4.2','ph4','Comparatif des devis','Quote comparison','2026-12-31'],
+['4.3','ph4','Planning travaux + suivi de chantier','Works schedule + site follow-up','2027-01-07'],
+['6.1','ph6','Short-list fournisseurs + demandes de prix','Supplier short-list + price requests','2026-12-24'],
+['6.2','ph6','Plan de production et fiches recettes','Production plan and recipe sheets','2027-01-07'],
+['6.3','ph6','Pack de procédures (SOP)','SOP pack','2027-01-14'],
+['7.1','ph7','Plan de formation + besoins en personnel','Training plan + staffing needs','2026-12-27'],
+['7.2','ph7','Sessions de formation de l\'équipe','Team training sessions','2027-01-21'],
+['7.3','ph7','Checklist pré-ouverture + test à blanc','Pre-opening checklist + dry run','2027-01-21'],
+['7.4','ph7','Revue de préparation à l\'ouverture (go / no-go)','Opening readiness review (go / no-go)','2027-01-27']];
+const PAY=[['pay1','Signature du contrat','Contract signature',27375,'2026-11-16'],
+['pay2','Validation implantation, équipements, budget (S5)','Layout, equipment & budget validated (W5)',13687.5,'2026-12-17'],
+['pay3','Début phase 7 (S7)','Start of phase 7 (W7)',13687.5,'2026-12-27']];
+const CHK={q:[['Concept et positionnement visés, clientèle cible, ticket moyen','Target concept and positioning, customers, average ticket'],['Enveloppe d\'investissement maximale et financement','Maximum investment envelope and financing'],['Local : adresse, surface, bail, contraintes du bailleur, remise des clés','Premises: address, area, lease, landlord constraints, key handover'],['Autorisations nécessaires et qui les obtient','Required permits and who obtains them'],['Décideurs côté client et délai de réponse','Client decision-makers and response time'],['Éléments de marque existants, références aimées ou détestées','Existing brand elements, liked or disliked references'],['Idées de menu, horaires, sur place / emporter / livraison','Menu ideas, hours, dine-in / takeaway / delivery'],['Équipe déjà prévue et date de recrutement souhaitée','Team already planned and desired hiring date']],
+v:[['Dimensions, hauteur sous plafond, façade et vitrine, accès livraison','Dimensions, ceiling height, frontage and window, delivery access'],['Puissance électrique, eau, évacuation, gaz','Electrical load, water, drainage, gas'],['Extraction / ventilation, climatisation, bac à graisse','Extraction / ventilation, air conditioning, grease trap'],['Stockage, sanitaires, issues et exigences défense civile','Storage, toilets, exits and civil defence requirements'],['Règles d\'enseigne, stationnement, voisinage','Signage rules, parking, neighbours'],['Photos de chaque zone et plan coté','Photos of each zone and dimensioned plan']],
+r:[['Synthèse : le local convient-il ? oui / ajustements / non','Summary: does the site work? yes / adjustments / no'],['Contraintes techniques et réglementaires relevées','Technical and regulatory constraints found'],['Direction de concept et capacité (places, production)','Concept direction and capacity (seats, production)'],['Première fourchette d\'investissement','First investment range'],['Risques sur le calendrier et décisions attendues du client','Schedule risks and decisions expected from the client']]};
+const ST=['todo','doing','sent','done'];
+let LANG=localStorage.getItem('ndl')||'fr',CODE=sessionStorage.getItem('ndc')||localStorage.getItem('ndc')||'',TAB='dash',DB={},timers={};
+const t=k=>T[LANG][k]!==undefined?T[LANG][k]:k;
+const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const today=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
+const nid=()=>'x'+Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+const nm=o=>o['title_'+LANG]||o.title_fr||o.title||'';
+const fmt=n=>(Number(n)||0).toLocaleString(LANG==='fr'?'fr-FR':'en-US',{maximumFractionDigits:2});
+const fd=d=>{if(!d)return'';const x=new Date(d+'T00:00:00');return x.toLocaleDateString(LANG==='fr'?'fr-FR':'en-GB',{day:'numeric',month:'short'})};
+function toast(m,ms){const e=document.getElementById('msg');e.textContent=m;e.style.display='block';clearTimeout(toast.t);toast.t=setTimeout(()=>e.style.display='none',ms||1400)}
+async function rpc(fn,a){const r=await fetch(SB+'/rest/v1/rpc/'+fn,{method:'POST',headers:{apikey:KEY,Authorization:'Bearer '+KEY,'Content-Type':'application/json'},body:JSON.stringify(a)});const x=await r.text();if(!r.ok)throw new Error(x);return x?JSON.parse(x):null}
+const items=k=>Object.values(DB).filter(o=>o.kind===k);
+function put(o){DB[o.id]=o;const{id,kind,...d}=o;return rpc('nay_doan_upsert',{p_code:CODE,p_id:id,p_kind:kind,p_data:d})}
+function save(o,now){toast(t('saving'),600);clearTimeout(timers[o.id]);const go=()=>put(o).then(()=>toast(t('saved'))).catch(()=>toast(t('err'),3000));if(now)go();else timers[o.id]=setTimeout(go,500)}
+async function del(id){delete DB[id];try{await rpc('nay_doan_delete',{p_code:CODE,p_id:id})}catch(e){toast(t('err'),3000)}}
+async function load(){const rows=await rpc('nay_doan_list',{p_code:CODE});DB={};rows.forEach(r=>DB[r.id]={id:r.id,kind:r.kind,...r.data});
+ if(!items('ph').length){toast(t('saving'),3000);const s=[];
+  PH.forEach((p,i)=>s.push({id:p[0],kind:'ph',num:p[1],title_fr:p[2],title_en:p[3],start:p[4],end:p[5],ord:i}));
+  DL.forEach((d,i)=>s.push({id:'dl'+d[0],kind:'dl',ref:d[0],phase:d[1],title_fr:d[2],title_en:d[3],due:d[4],status:'todo',note:'',ord:i}));
+  PAY.forEach((p,i)=>s.push({id:p[0],kind:'pay',title_fr:p[1],title_en:p[2],amount:p[3],planned:p[4],status:'todo',sentOn:'',paidOn:'',note:'',link:i===0?'https://claude.ai/artifact/5Azd1nXzVhMXKDzyy35VZ4':'',ord:i}));
+  ['q','v','r'].forEach(g=>CHK[g].forEach((c,i)=>s.push({id:'ck'+g+i,kind:'ck',grp:g,title_fr:c[0],title_en:c[1],done:false,note:'',ord:i})));
+  s.push({id:'cfg1',kind:'cfg',budget:0});
+  await Promise.all(s.map(o=>put(o)));}
+}
+async function login(c){CODE=c;try{await load();sessionStorage.setItem('ndc',c);localStorage.setItem('ndc',c);return true}catch(e){CODE='';return false}}
+function setLang(l){LANG=l;localStorage.setItem('ndl',l);document.documentElement.lang=l;render()}
+function setTab(x){TAB=x;render();window.scrollTo(0,0)}
+function logout(){sessionStorage.removeItem('ndc');localStorage.removeItem('ndc');CODE='';DB={};render()}
+function backup(){const b=new Blob([JSON.stringify(Object.values(DB),null,1)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='doan-pilotage-'+today()+'.json';a.click()}
+function render(){const A=document.getElementById('app');
+ if(!CODE||!Object.keys(DB).length){A.innerHTML='<div id="login" class="card"><div class="brand" style="justify-content:center;color:var(--ink)"><i></i>NAYISSORIA <small style="color:var(--mut)">ADVISORY</small></div><p class="sub">'+esc(t('sub'))+'</p><input id="lc" type="password" placeholder="'+esc(t('code'))+'" autocomplete="current-password"><button class="b g" style="width:100%" id="lgo">'+esc(t('enter'))+'</button><p id="le" style="color:var(--red)"></p><div class="row" style="justify-content:center"><button class="b o" onclick="setLang(\'fr\')">FR</button><button class="b o" onclick="setLang(\'en\')">EN</button></div></div>';
+  const go=async()=>{const v=document.getElementById('lc').value.trim();if(!v)return;document.getElementById('le').textContent='…';if(await login(v))render();else document.getElementById('le').textContent=t('bad')};
+  document.getElementById('lgo').onclick=go;document.getElementById('lc').onkeydown=e=>{if(e.key==='Enter')go()};return}
+ const tabs=[['dash','dash'],['deliv','deliv'],['pay','pay'],['p1','p1'],['bud','bud'],['ctc','ctc']];
+ const body={dash:vDash,deliv:vDeliv,pay:vPay,p1:vP1,bud:vBud,ctc:vCtc}[TAB]();
+ A.innerHTML='<header><div class="brand"><i></i>NAYISSORIA <small>DOAN</small></div>'+tabs.map(x=>'<button class="tab'+(TAB===x[0]?' on':'')+'" onclick="setTab(\''+x[0]+'\')">'+esc(t(x[1]))+'</button>').join('')+'<div class="sp"></div><div class="lang"><button class="'+(LANG==='fr'?'on':'')+'" onclick="setLang(\'fr\')">FR</button><button class="'+(LANG==='en'?'on':'')+'" onclick="setLang(\'en\')">EN</button></div><button class="hbtn" onclick="backup()">'+esc(t('backup'))+'</button><button class="hbtn" onclick="logout()">'+esc(t('logout'))+'</button></header><main>'+body+'</main>'}
+const sortBy=(a,f)=>a.slice().sort((x,y)=>(x[f]>y[f])-(x[f]<y[f]));
+const phases=()=>items('ph').sort((a,b)=>a.ord-b.ord);
+const dls=()=>items('dl').sort((a,b)=>(a.due>b.due)-(a.due<b.due)||a.ref.localeCompare(b.ref,undefined,{numeric:true}));
+const isLate=d=>d.status!=='done'&&d.due&&d.due<today();
+const stSel=(k,id,v)=>'<select data-k="'+k+'" data-id="'+id+'" data-f="status">'+ST.map(s=>'<option value="'+s+'"'+(v===s?' selected':'')+'>'+esc(t(s))+'</option>').join('')+'</select>';
+function vDash(){const D=dls(),done=D.filter(d=>d.status==='done').length,late=D.filter(isLate),P=items('pay').sort((a,b)=>a.ord-b.ord);
+ const days=Math.ceil((END-new Date(today()+'T00:00:00'))/864e5),recv=P.filter(p=>p.status==='paid').reduce((s,p)=>s+Number(p.amount),0);
+ const nxt=D.filter(d=>d.status!=='done').slice(0,6);
+ const row=d=>'<tr class="'+(isLate(d)?'late':'')+'"><td>'+esc(d.ref)+'</td><td>'+esc(nm(d))+'</td><td>'+fd(d.due)+'</td><td><span class="chip c-'+d.status+'">'+esc(t(d.status))+'</span></td></tr>';
+ return '<h1>'+esc(t('dash'))+'</h1><p class="sub">'+esc(t('sub'))+'</p><div class="grid g4"><div class="card kpi"><div class="n">'+days+'</div><div class="l">'+esc(t('days'))+' · 28/01/2027</div></div><div class="card kpi"><div class="n">'+done+' / '+D.length+'</div><div class="l">'+esc(t('prog'))+'</div><div class="bar" style="margin-top:8px"><i style="width:'+(D.length?done*100/D.length:0)+'%"></i></div></div><div class="card kpi"><div class="n" style="color:'+(late.length?'var(--red)':'var(--grn)')+'">'+late.length+'</div><div class="l">'+esc(t('lateN'))+'</div></div><div class="card kpi"><div class="n">'+fmt(recv)+'</div><div class="l">'+esc(t('recv'))+' / 54 750</div></div></div>'
+ +'<div class="grid g2"><div class="card"><h2>'+esc(t('next'))+'</h2><table><tr><th>'+esc(t('ref'))+'</th><th>'+esc(t('title'))+'</th><th>'+esc(t('due'))+'</th><th>'+esc(t('status'))+'</th></tr>'+(nxt.map(row).join('')||'<tr><td colspan=4 class="mut">'+esc(t('none'))+'</td></tr>')+'</table></div>'
+ +'<div class="card"><h2>'+esc(t('byPhase'))+'</h2>'+phases().map(p=>{const x=D.filter(d=>d.phase===p.id),n=x.filter(d=>d.status==='done').length;return '<div style="margin-bottom:10px"><div class="row sm"><b>'+esc(p.num)+'</b> '+esc(nm(p))+'<span class="sp"></span>'+n+'/'+x.length+'</div><div class="bar"><i style="width:'+(x.length?n*100/x.length:0)+'%"></i></div></div>'}).join('')+'</div></div>'
+ +'<div class="card"><h2>'+esc(t('payS'))+'</h2><table><tr><th>#</th><th>'+esc(t('trigger'))+'</th><th class="tr">'+esc(t('amount'))+'</th><th>'+esc(t('planned'))+'</th><th>'+esc(t('status'))+'</th></tr>'+P.map((p,i)=>'<tr><td>'+(i+1)+'</td><td>'+esc(nm(p))+'</td><td class="tr">'+fmt(p.amount)+'</td><td>'+fd(p.planned)+'</td><td><span class="chip c-'+(p.status==='paid'?'paid':p.status==='sent'?'sent':'todo')+'">'+esc(t('p'+p.status))+'</span></td></tr>').join('')+'</table></div>'}
+function vDeliv(){const D=dls(),Ph=phases(),pos=d=>Math.max(0,Math.min(100,(Math.round((new Date(d+'T00:00:00')-START)/864e5)+.5)*100/DAYS)),
+ wk=Array.from({length:11},(_,i)=>'<span>'+t('wk')+(i+1)+'</span>').join(''),lines=Array.from({length:11},(_,i)=>'<i class="wkl" style="left:'+(i*7*100/DAYS)+'%"></i>').join(''),
+ td=pos(today()),tl=(new Date(today())>=START&&new Date(today())<=END)?'<i class="today" style="left:'+td+'%"></i>':'';
+ const g=Ph.map(p=>{const x=D.filter(d=>d.phase===p.id),l=pos(p.start),r=pos(p.end);return '<div class="gr"><div class="lab"><b>'+esc(p.num)+'</b> '+esc(nm(p))+'</div><div class="track">'+lines+'<i class="gb'+(x.length&&x.every(d=>d.status==='done')?' d':'')+'" style="left:'+l+'%;width:'+Math.max(1,r-l)+'%"></i>'+x.map(d=>'<i class="dot'+(d.status==='done'?' d':isLate(d)?' l':'')+'" title="'+esc(d.ref+' '+nm(d)+' · '+d.due)+'" style="left:'+pos(d.due)+'%"></i>').join('')+tl+'</div></div>'}).join('');
+ const ms='<div class="gr"><div class="lab"><b>◆</b> '+esc(t('payM'))+' / '+esc(t('opening'))+'</div><div class="track">'+lines+items('pay').map(p=>'<i class="dia" title="'+esc(nm(p)+' · '+p.planned)+'" style="left:'+pos(p.planned)+'%;background:var(--gold)"></i>').join('')+'<i class="dia" title="'+esc(t('opening'))+' 28/01" style="left:'+pos('2027-01-28')+'%"></i>'+tl+'</div></div>';
+ const opts=Ph.map(p=>'<option value="'+p.id+'">'+esc(p.num+' · '+nm(p))+'</option>').join('');
+ const rows=D.map(d=>'<tr class="'+(isLate(d)?'late':'')+'"><td><input class="w" style="width:56px" data-k="dl" data-id="'+d.id+'" data-f="ref" value="'+esc(d.ref)+'"></td><td><select data-k="dl" data-id="'+d.id+'" data-f="phase">'+Ph.map(p=>'<option value="'+p.id+'"'+(d.phase===p.id?' selected':'')+'>'+esc(p.num)+'</option>').join('')+'</select></td><td><input class="w" data-k="dl" data-id="'+d.id+'" data-f="title_'+LANG+'" value="'+esc(nm(d))+'"></td><td><input type="date" data-k="dl" data-id="'+d.id+'" data-f="due" value="'+esc(d.due)+'"></td><td>'+stSel('dl',d.id,d.status)+'</td><td><input class="w" data-k="dl" data-id="'+d.id+'" data-f="note" value="'+esc(d.note)+'"></td><td><button class="x" data-del="'+d.id+'">✕</button></td></tr>').join('');
+ const prow=Ph.map(p=>'<tr><td><b>'+esc(p.num)+'</b></td><td>'+esc(nm(p))+'</td><td><input type="date" data-k="ph" data-id="'+p.id+'" data-f="start" value="'+p.start+'"></td><td><input type="date" data-k="ph" data-id="'+p.id+'" data-f="end" value="'+p.end+'"></td></tr>').join('');
+ return '<h1>'+esc(t('deliv'))+'</h1><div class="card gantt"><h2>'+esc(t('gantt'))+'</h2><div class="gt"><div class="gh"><div></div><div class="wk">'+wk+'</div></div>'+g+ms+'</div></div>'
+ +'<div class="card"><div class="row" style="margin-bottom:8px"><h2 style="margin:0">'+esc(t('deliv'))+'</h2><span class="sp"></span><button class="b g" data-add="dl">'+esc(t('add'))+'</button></div><div style="overflow-x:auto"><table><tr><th>'+esc(t('ref'))+'</th><th>'+esc(t('phase'))+'</th><th>'+esc(t('title'))+'</th><th>'+esc(t('due'))+'</th><th>'+esc(t('status'))+'</th><th>'+esc(t('note'))+'</th><th></th></tr>'+rows+'</table></div></div>'
+ +'<div class="card"><h2>'+esc(t('phase'))+'</h2><table><tr><th>#</th><th></th><th>Début / Start</th><th>Fin / End</th></tr>'+prow+'</table></div>'}
+function vPay(){const P=items('pay').sort((a,b)=>a.ord-b.ord),tot=P.reduce((s,p)=>s+Number(p.amount),0),rec=P.filter(p=>p.status==='paid').reduce((s,p)=>s+Number(p.amount),0);
+ const rows=P.map((p,i)=>'<tr><td><b>'+(i+1)+'</b></td><td>'+esc(nm(p))+(p.link?'<div class="sm"><a href="'+esc(p.link)+'" target="_blank" rel="noopener">'+esc(t('link'))+'</a></div>':'')+'</td><td><input type="number" step="0.01" data-k="pay" data-id="'+p.id+'" data-f="amount" value="'+esc(p.amount)+'"></td><td><input type="date" data-k="pay" data-id="'+p.id+'" data-f="planned" value="'+esc(p.planned)+'"></td><td><select data-k="pay" data-id="'+p.id+'" data-f="status">'+['todo','sent','paid'].map(s=>'<option value="'+s+'"'+(p.status===s?' selected':'')+'>'+esc(t('p'+s))+'</option>').join('')+'</select></td><td><input type="date" data-k="pay" data-id="'+p.id+'" data-f="sentOn" value="'+esc(p.sentOn)+'"></td><td><input type="date" data-k="pay" data-id="'+p.id+'" data-f="paidOn" value="'+esc(p.paidOn)+'"></td><td><input class="w" data-k="pay" data-id="'+p.id+'" data-f="note" value="'+esc(p.note)+'"></td></tr>').join('');
+ return '<h1>'+esc(t('pay'))+'</h1><p class="sub">Support Agreement NAY-KAN-2026-001 · 54 750 SAR · 50 / 25 / 25</p><div class="grid g4"><div class="card kpi"><div class="n">'+fmt(tot)+'</div><div class="l">'+esc(t('total'))+'</div></div><div class="card kpi"><div class="n" style="color:var(--grn)">'+fmt(rec)+'</div><div class="l">'+esc(t('recv'))+'</div></div><div class="card kpi"><div class="n">'+fmt(tot-rec)+'</div><div class="l">'+esc(t('remain'))+'</div></div></div><div class="card" style="overflow-x:auto"><table><tr><th>#</th><th>'+esc(t('trigger'))+'</th><th>'+esc(t('amount'))+'</th><th>'+esc(t('planned'))+'</th><th>'+esc(t('status'))+'</th><th>'+esc(t('sentOn'))+'</th><th>'+esc(t('paidOn'))+'</th><th>'+esc(t('note'))+'</th></tr>'+rows+'</table></div>'}
+function vP1(){const sec=g=>{const L=items('ck').filter(c=>c.grp===g).sort((a,b)=>a.ord-b.ord),n=L.filter(c=>c.done).length;
+  return '<div class="card"><div class="row" style="margin-bottom:6px"><h2 style="margin:0">'+esc(t(g))+'</h2><span class="mut sm">'+n+'/'+L.length+'</span><span class="sp"></span><button class="b o" data-add="ck" data-grp="'+g+'">'+esc(t('add'))+'</button></div><table>'+L.map(c=>'<tr><td style="width:30px"><input type="checkbox" data-k="ck" data-id="'+c.id+'" data-f="done"'+(c.done?' checked':'')+'></td><td style="'+(c.done?'text-decoration:line-through;color:var(--mut)':'')+'"><input class="w" data-k="ck" data-id="'+c.id+'" data-f="title_'+LANG+'" value="'+esc(nm(c))+'" style="border:0;background:none"></td><td style="width:34%"><input class="w" placeholder="'+esc(t('note'))+'" data-k="ck" data-id="'+c.id+'" data-f="note" value="'+esc(c.note)+'"></td><td style="width:30px"><button class="x" data-del="'+c.id+'">✕</button></td></tr>').join('')+'</table></div>'};
+ const J=items('log').sort((a,b)=>(a.date<b.date)-(a.date>b.date));
+ return '<h1>'+esc(t('p1'))+'</h1><div class="grid g2"><div>'+sec('q')+sec('v')+sec('r')+'</div><div class="card"><div class="row" style="margin-bottom:8px"><h2 style="margin:0">'+esc(t('journal'))+'</h2><span class="sp"></span><button class="b g" data-add="log">'+esc(t('add'))+'</button></div><table><tr><th>'+esc(t('date'))+'</th><th>'+esc(t('decision'))+'</th><th>'+esc(t('who'))+'</th><th></th></tr>'+J.map(j=>'<tr><td><input type="date" data-k="log" data-id="'+j.id+'" data-f="date" value="'+esc(j.date)+'"></td><td><textarea rows="2" style="width:100%" data-k="log" data-id="'+j.id+'" data-f="text">'+esc(j.text)+'</textarea></td><td><select data-k="log" data-id="'+j.id+'" data-f="who"><option value="client"'+(j.who==='client'?' selected':'')+'>'+esc(t('client'))+'</option><option value="me"'+(j.who==='me'?' selected':'')+'>'+esc(t('me'))+'</option></select></td><td><button class="x" data-del="'+j.id+'">✕</button></td></tr>').join('')+'</table></div></div>'}
+function vBud(){const B=items('bud').sort((a,b)=>(a.family>b.family)-(a.family<b.family)),cfg=DB.cfg1||{id:'cfg1',kind:'cfg',budget:0},q=B.reduce((s,b)=>s+Number(b.quote||0),0),p=B.reduce((s,b)=>s+Number(b.paid||0),0),F=T[LANG].fams;
+ const fam=F.map((f,i)=>{const x=B.filter(b=>String(b.family)===String(i));return x.length?'<tr><td>'+esc(f)+'</td><td class="tr">'+fmt(x.reduce((s,b)=>s+Number(b.quote||0),0))+'</td><td class="tr">'+fmt(x.reduce((s,b)=>s+Number(b.paid||0),0))+'</td></tr>':''}).join('');
+ return '<h1>'+esc(t('bud'))+'</h1><div class="grid g4"><div class="card kpi"><div class="l">'+esc(t('target'))+'</div><input type="number" data-k="cfg" data-id="cfg1" data-f="budget" value="'+esc(cfg.budget)+'" style="font-size:20px;width:100%;margin-top:6px"></div><div class="card kpi"><div class="n">'+fmt(q)+'</div><div class="l">'+esc(t('totQ'))+'</div></div><div class="card kpi"><div class="n">'+fmt(p)+'</div><div class="l">'+esc(t('totP'))+'</div></div><div class="card kpi"><div class="n" style="color:'+((cfg.budget-q)<0&&cfg.budget?'var(--red)':'inherit')+'">'+(cfg.budget?fmt(cfg.budget-q):'—')+'</div><div class="l">'+esc(t('offBud'))+'</div></div></div>'
+ +'<div class="grid g2"><div class="card" style="overflow-x:auto"><div class="row" style="margin-bottom:8px"><h2 style="margin:0">'+esc(t('bud'))+'</h2><span class="sp"></span><button class="b g" data-add="bud">'+esc(t('add'))+'</button></div><table><tr><th>'+esc(t('label'))+'</th><th>'+esc(t('family'))+'</th><th>'+esc(t('supplier'))+'</th><th>'+esc(t('quote'))+'</th><th>'+esc(t('paid'))+'</th><th>'+esc(t('bstat'))+'</th><th></th></tr>'+B.map(b=>'<tr><td><input class="w" data-k="bud" data-id="'+b.id+'" data-f="label" value="'+esc(b.label)+'"></td><td><select data-k="bud" data-id="'+b.id+'" data-f="family">'+F.map((f,i)=>'<option value="'+i+'"'+(String(b.family)===String(i)?' selected':'')+'>'+esc(f)+'</option>').join('')+'</select></td><td><input class="w" data-k="bud" data-id="'+b.id+'" data-f="supplier" value="'+esc(b.supplier)+'"></td><td><input type="number" data-k="bud" data-id="'+b.id+'" data-f="quote" value="'+esc(b.quote)+'"></td><td><input type="number" data-k="bud" data-id="'+b.id+'" data-f="paid" value="'+esc(b.paid)+'"></td><td><select data-k="bud" data-id="'+b.id+'" data-f="stat">'+[0,1,2,3].map(i=>'<option value="'+i+'"'+(String(b.stat)===String(i)?' selected':'')+'>'+esc(t('b'+i))+'</option>').join('')+'</select></td><td><button class="x" data-del="'+b.id+'">✕</button></td></tr>').join('')+'</table></div>'
+ +'<div class="card"><h2>'+esc(t('family'))+'</h2><table><tr><th></th><th class="tr">'+esc(t('quote'))+'</th><th class="tr">'+esc(t('paid'))+'</th></tr>'+fam+'</table></div></div>'}
+function vCtc(){const C=sortBy(items('ctc'),'name'),R=T[LANG].roles;
+ return '<h1>'+esc(t('ctc'))+'</h1><div class="card" style="overflow-x:auto"><div class="row" style="margin-bottom:8px"><span class="sp"></span><button class="b g" data-add="ctc">'+esc(t('add'))+'</button></div><table><tr><th>'+esc(t('name'))+'</th><th>'+esc(t('role'))+'</th><th>'+esc(t('company'))+'</th><th>'+esc(t('phone'))+'</th><th>'+esc(t('email'))+'</th><th>'+esc(t('note'))+'</th><th></th></tr>'+C.map(c=>'<tr><td><input class="w" data-k="ctc" data-id="'+c.id+'" data-f="name" value="'+esc(c.name)+'"></td><td><select data-k="ctc" data-id="'+c.id+'" data-f="role">'+R.map((r,i)=>'<option value="'+i+'"'+(String(c.role)===String(i)?' selected':'')+'>'+esc(r)+'</option>').join('')+'</select></td><td><input class="w" data-k="ctc" data-id="'+c.id+'" data-f="company" value="'+esc(c.company)+'"></td><td><input class="w" data-k="ctc" data-id="'+c.id+'" data-f="phone" value="'+esc(c.phone)+'">'+(c.phone?' <a href="tel:'+esc(c.phone)+'">☎</a>':'')+'</td><td><input class="w" data-k="ctc" data-id="'+c.id+'" data-f="email" value="'+esc(c.email)+'">'+(c.email?' <a href="mailto:'+esc(c.email)+'">✉</a>':'')+'</td><td><input class="w" data-k="ctc" data-id="'+c.id+'" data-f="note" value="'+esc(c.note)+'"></td><td><button class="x" data-del="'+c.id+'">✕</button></td></tr>').join('')+'</table></div>'}
+document.addEventListener('change',e=>{const el=e.target,k=el.dataset&&el.dataset.k;if(!k)return;const o=DB[el.dataset.id];if(!o)return;let v=el.type==='checkbox'?el.checked:el.value;if(el.type==='number')v=v===''?0:Number(v);
+ const f=el.dataset.f;o[f]=v;if(k==='pay'&&f==='status'){if(v==='sent'&&!o.sentOn)o.sentOn=today();if(v==='paid'&&!o.paidOn)o.paidOn=today();}
+ save(o,true);if(['status','done','due','start','end','phase','amount','quote','paid','budget','family','stat'].includes(f))render()});
+document.addEventListener('input',e=>{const el=e.target,k=el.dataset&&el.dataset.k;if(!k||el.type==='checkbox'||el.tagName==='SELECT'||el.type==='date'||el.type==='number')return;const o=DB[el.dataset.id];if(!o)return;o[el.dataset.f]=el.value;save(o,false)});
+document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;
+ if(b.dataset.del){if(confirm(t('del'))){del(b.dataset.del).then(render)}return}
+ if(b.dataset.add){const k=b.dataset.add,id=nid(),n=items(k).length;let o;
+  if(k==='dl')o={id,kind:'dl',ref:'',phase:'ph1',title_fr:'',title_en:'',due:today(),status:'todo',note:'',ord:n};
+  if(k==='ck')o={id,kind:'ck',grp:b.dataset.grp,title_fr:'',title_en:'',done:false,note:'',ord:n+100};
+  if(k==='log')o={id,kind:'log',date:today(),text:'',who:'client'};
+  if(k==='bud')o={id,kind:'bud',label:'',family:0,supplier:'',quote:0,paid:0,stat:0};
+  if(k==='ctc')o={id,kind:'ctc',name:'',role:0,company:'',phone:'',email:'',note:''};
+  if(o){DB[id]=o;save(o,true);render()}}});
+(async()=>{document.documentElement.lang=LANG;if(CODE){if(!(await login(CODE)))CODE=''}render()})();
+</script></body></html>
