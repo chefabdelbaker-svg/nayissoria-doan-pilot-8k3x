@@ -138,7 +138,7 @@ async function load(){const rows=await rpc('nay_doan_list',{p_code:CODE});DB={};
   await Promise.all(s.map(o=>put(o)));}
  recalc();
 }
-async function login(c){CODE=c;try{await load();sessionStorage.setItem('ndc',c);localStorage.setItem('ndc',c);return true}catch(e){CODE='';return false}}
+async function login(c){CODE=c;try{const g=await rpc('nay_doan_login',{p_code:c});if(!g||g.error){CODE='';if(g&&g.error==='locked')toast('Trop d\'essais. Réessaie dans 10 minutes.',4000);return false}await load();sessionStorage.setItem('ndc',c);localStorage.setItem('ndc',c);return true}catch(e){CODE='';return false}}
 function setLang(l){LANG=l;localStorage.setItem('ndl',l);document.documentElement.lang=l;render()}
 function setTab(x){TAB=x;render();window.scrollTo(0,0)}
 function logout(){sessionStorage.removeItem('ndc');localStorage.removeItem('ndc');CODE='';DB={};render()}
