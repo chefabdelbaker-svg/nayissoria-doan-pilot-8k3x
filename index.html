@@ -54,7 +54,7 @@ const ymd=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+Stri
 const addDays=(s,n)=>{const d=new Date(s+'T00:00:00');if(isNaN(d))return s;d.setDate(d.getDate()+n);return ymd(d)};
 function recalc(){const P=Object.values(DB).filter(o=>o.kind==='ph'&&o.start&&o.end);if(!P.length)return;START=new Date(P.map(p=>p.start).sort()[0]+'T00:00:00');END=new Date(P.map(p=>p.end).sort().slice(-1)[0]+'T00:00:00');DAYS=Math.round((END-START)/864e5)+1}
 const T={fr:{
- sub:'Pilotage du projet DOAN · Khaliat Al Nahl (Rabwa, Riyadh)',dash:'Tableau de bord',deliv:'Livrables & Gantt',pay:'Paiements',p1:'Phase 1 & journal',bud:'Budget client',ctc:'Contacts',
+ sub:'Pilotage du projet DOAN · Khaliat Al Nahl (Rabwa, Riyadh)',dash:'Tableau de bord',deliv:'Livrables & Gantt',pay:'Paiements',p1:'Phase 1 & journal',bud:'Budget client',ctc:'Contacts',inbox:'Reçus du client',
  code:'Code d\'accès',enter:'Entrer',bad:'Code incorrect',logout:'Quitter',backup:'Sauvegarde',saving:'Enregistrement…',saved:'Enregistré',err:'Erreur de connexion',
  open:'Ouverture',days:'jours avant l\'ouverture',prog:'Livrables terminés',lateN:'Livrables en retard',recv:'Encaissé (SAR)',next:'Prochaines échéances',late:'En retard',none:'Rien',
  byPhase:'Avancement par phase',payS:'Paiements',phase:'Phase',ref:'Réf',title:'Livrable',due:'Échéance',status:'Statut',note:'Note',add:'+ Ajouter',
@@ -66,7 +66,7 @@ const T={fr:{
  fams:['Travaux','Équipements','Design & identité','Mobilier','Licences & admin','Autre'],roles:['Architecte','Designer','Entreprise travaux','Fournisseur','Juridique','Client','Autre'],
  itemTxt:'Point',del:'Supprimer ?',totQ:'Total devis',totP:'Total payé',offBud:'Reste sur budget',wk:'S'},
 en:{
- sub:'DOAN · Khaliat Al Nahl project control (Rabwa, Riyadh)',dash:'Dashboard',deliv:'Deliverables & Gantt',pay:'Payments',p1:'Phase 1 & log',bud:'Client budget',ctc:'Contacts',
+ sub:'DOAN · Khaliat Al Nahl project control (Rabwa, Riyadh)',dash:'Dashboard',deliv:'Deliverables & Gantt',pay:'Payments',p1:'Phase 1 & log',bud:'Client budget',ctc:'Contacts',inbox:'Client files',
  code:'Access code',enter:'Enter',bad:'Wrong code',logout:'Log out',backup:'Backup',saving:'Saving…',saved:'Saved',err:'Connection error',
  open:'Opening',days:'days to opening',prog:'Deliverables done',lateN:'Late deliverables',recv:'Received (SAR)',next:'Next deadlines',late:'Late',none:'Nothing',
  byPhase:'Progress by phase',payS:'Payments',phase:'Phase',ref:'Ref',title:'Deliverable',due:'Due',status:'Status',note:'Note',add:'+ Add',
@@ -143,12 +143,20 @@ function setLang(l){LANG=l;localStorage.setItem('ndl',l);document.documentElemen
 function setTab(x){TAB=x;render();window.scrollTo(0,0)}
 function logout(){sessionStorage.removeItem('ndc');localStorage.removeItem('ndc');CODE='';DB={};render()}
 function backup(){const b=new Blob([JSON.stringify(Object.values(DB),null,1)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='doan-pilotage-'+today()+'.json';a.click()}
+
+let CF=null,CFerr='';
+async function loadCF(){try{CF=await rpc('nay_doan_clientfiles',{p_code:CODE})||[];CFerr=''}catch(e){CF=[];CFerr=String(e.message||e)}render()}
+function vInbox(){const fr=LANG==='fr';if(CF===null){loadCF();return '<h1>'+esc(t('inbox'))+'</h1><p class="sub">…</p>'}
+ const kb=n=>n>=1048576?(n/1048576).toFixed(1)+' MB':Math.max(1,Math.round(n/1024))+' KB';
+ return '<h1>'+esc(t('inbox'))+'</h1><p class="sub">'+(fr?'Tout ce que le client a déposé dans son espace, du plus récent au plus ancien. Rien ici n’est partagé avec d’autres.':'Everything the client uploaded in their space, newest first.')+'</p><div class="card"><div style="margin-bottom:8px"><button class="b o" onclick="CF=null;render()">'+(fr?'↻ Actualiser':'↻ Refresh')+'</button></div>'
+ +(CFerr?'<p class="mut">'+esc(CFerr)+'</p>':'')+'<table><tr><th>'+(fr?'Reçu':'Received')+'</th><th>'+(fr?'Fichier':'File')+'</th><th>'+(fr?'Taille':'Size')+'</th></tr>'
+ +(CF.length?CF.map(f=>'<tr><td>'+esc(f.ts||'')+'</td><td><a href="'+esc(f.url)+'" target="_blank" rel="noopener">'+esc(f.name||f.url)+'</a></td><td>'+kb(Number(f.size)||0)+'</td></tr>').join(''):'<tr><td colspan="3" class="mut">'+(fr?'Aucun fichier pour l’instant.':'No files yet.')+'</td></tr>')+'</table></div>'}
 function render(){const A=document.getElementById('app');
  if(!CODE||!Object.keys(DB).length){A.innerHTML='<div id="login" class="card"><div class="brand" style="justify-content:center;color:var(--ink)"><i></i>NAYISSORIA <small style="color:var(--mut)">ADVISORY</small></div><p class="sub">'+esc(t('sub'))+'</p><input id="lc" type="password" placeholder="'+esc(t('code'))+'" autocomplete="current-password"><button class="b g" style="width:100%" id="lgo">'+esc(t('enter'))+'</button><p id="le" style="color:var(--red)"></p><div class="row" style="justify-content:center"><button class="b o" onclick="setLang(\'fr\')">FR</button><button class="b o" onclick="setLang(\'en\')">EN</button></div></div>';
   const go=async()=>{const v=document.getElementById('lc').value.trim();if(!v)return;document.getElementById('le').textContent='…';if(await login(v))render();else document.getElementById('le').textContent=t('bad')};
   document.getElementById('lgo').onclick=go;document.getElementById('lc').onkeydown=e=>{if(e.key==='Enter')go()};return}
- const tabs=[['dash','dash'],['deliv','deliv'],['pay','pay'],['p1','p1'],['bud','bud'],['ctc','ctc']];
- const body={dash:vDash,deliv:vDeliv,pay:vPay,p1:vP1,bud:vBud,ctc:vCtc}[TAB]();
+ const tabs=[['dash','dash'],['deliv','deliv'],['pay','pay'],['p1','p1'],['bud','bud'],['ctc','ctc'],['inbox','inbox']];
+ const body={dash:vDash,deliv:vDeliv,pay:vPay,p1:vP1,bud:vBud,ctc:vCtc,inbox:vInbox}[TAB]();
  A.innerHTML='<header><div class="brand"><i></i>NAYISSORIA <small>DOAN</small></div>'+tabs.map(x=>'<button class="tab'+(TAB===x[0]?' on':'')+'" onclick="setTab(\''+x[0]+'\')">'+esc(t(x[1]))+'</button>').join('')+'<div class="sp"></div><div class="lang"><button class="'+(LANG==='fr'?'on':'')+'" onclick="setLang(\'fr\')">FR</button><button class="'+(LANG==='en'?'on':'')+'" onclick="setLang(\'en\')">EN</button></div><button class="hbtn" onclick="backup()">'+esc(t('backup'))+'</button><button class="hbtn" onclick="logout()">'+esc(t('logout'))+'</button></header><main>'+body+'</main>'}
 const sortBy=(a,f)=>a.slice().sort((x,y)=>(x[f]>y[f])-(x[f]<y[f]));
 const phases=()=>items('ph').sort((a,b)=>a.ord-b.ord);
